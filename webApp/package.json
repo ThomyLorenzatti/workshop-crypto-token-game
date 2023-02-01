@@ -9,5 +9,9 @@
   },
   "devDependencies": {
     "nuxt": "^3.1.1"
+  },
+  "dependencies": {
+    "vue3-fortune-wheel": "^1.1.37",
+    "vue3-roulette": "^0.2.0"
   }
 }
