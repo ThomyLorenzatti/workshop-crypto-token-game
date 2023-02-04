@@ -17,12 +17,13 @@ contract GameToken is ERC20 {
         return balanceOf(msg.sender);
     }
 
-    function _play(uint256 amount) public returns (bool) {
-        if (amount != 10*10**18)
-            return false;
+    function play(uint256 amount) public {
+
+        uint256 fromBalance = balanceOf(msg.sender);
+        require(fromBalance >= amount, "ERC20: transfer amount exceeds balance");
 
         // send token to smartcontract adress
-        _transfer(msg.sender, address(this), 10*10**18);
+        transferFrom(msg.sender, address(this), amount);
 
         // generate a random number
         uint random = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100;
@@ -38,7 +39,6 @@ contract GameToken is ERC20 {
             emit win(0);
         }
 
-        return true;
     }
 
 }
