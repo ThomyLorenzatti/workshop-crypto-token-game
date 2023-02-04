@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            smart_contract_address: '0x43f3E6F0a8E580a82Cec4B5710e9C09017F596C1',
+            smart_contract_address: '0x1E9fc0DA26d00F7620297Ef9cf0913a49dAE4288',
             rpc_url: 'https://matic-mumbai.chainstacklabs.com/',
         }
     },
