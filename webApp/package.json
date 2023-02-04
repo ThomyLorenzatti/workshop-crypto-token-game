@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@truffle/hdwallet-provider": "^2.1.6",
+    "nuxt-metamask": "^2.0.6",
     "vue3-fortune-wheel": "^1.1.37",
     "vue3-roulette": "^0.2.0",
+    "vuex": "^4.1.0",
     "web3": "^1.8.2"
   }
 }

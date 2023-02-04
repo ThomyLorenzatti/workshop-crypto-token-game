@@ -3,23 +3,43 @@
         <div class="light"></div>
         <div class="mainContent">
             <h1 class="title">Le token de la fortune</h1>
-            <Roulette
-            class="wheel"
-            ref="wheel"
-            :items="items"
-            :size="500"
-            :result="1"
-            :duration="10"
-            :indicator-position="top"
-            :display-indicator="true"
-            :centered-indicator="true"
-            :base-display-indicator="true"
-            @wheel-start="wheelStartedCallback"
-            @wheel-end="wheelEndedCallback"/>
+            <div class="wheelContent">
+                <Roulette
+                class="wheel"
+                ref="wheel"
+                :items="items"
+                :size="500"
+                :result="1"
+                :duration="10"
+                :indicator-position="top"
+                :display-indicator="true"
+                :centered-indicator="true"
+                :base-display-indicator="true"
+                @wheel-start="wheelStartedCallback"
+                @wheel-end="wheelEndedCallback"/>
+            </div>
             <button class="button" @click="launchWheel">Lancer la roue</button>
+            <div class="metaInfos">
+                <div v-if="!$metamask.states.installed">
+                    <h3>Metamask is not connected</h3>
+                    <p>Install Metamask to use this app</p>
+                </div>
+            <div v-if="$metamask.states.installed">
+                <h3>Metamask is already connected</h3>
+                <p>Network Chain ID: {{ $metamask.states.chainId }}</p>
+                <p v-if="$metamask.states.connected">
+                    Wallet: {{ $metamask.states.address }}
+                </p>
+                <button class="connect" :disabled="$metamask.states.connected" @click="$metamask.connect()">
+                    <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="Metamask"
+                        class="metaLogo">
+                    Connect your Wallet
+                </button>
+                </div>
+            </div>
             <img class="profil" src="https://resize-public.ladmedia.fr/img/var/public/storage/images/news/la-grosse-boulette-de-vincent-lagaf-sur-son-retour-sur-tf1-l-annonce-qu-il-a-du-immediatement-rectifier-1682838/44572832-1-fre-FR/La-grosse-boulette-de-Vincent-Lagaf-sur-son-retour-sur-TF1-l-annonce-qu-il-a-du-immediatement-rectifier-!.jpg"/>
         </div>
-        <!-- <p class="text">{{ res }}</p> -->
     </div>
 </template>
 
@@ -30,6 +50,7 @@ let res = ref('');
 // fetch hello api
 res = await $fetch('/api/hello');
 
+const $metamask = useMetamask();
 const wheel = ref(null);
 const items = [
   { id: 1, name: "Nothing", htmlContent: "Nothing", textColor: "red", background: "black" },
@@ -75,6 +96,39 @@ export default {
     border: 1vw blue solid;
 }
 
+.metaInfos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 1.5vw;
+    left: 1.5vw;
+    border-radius: 15px;
+    padding: 15px;
+    background-color: blue;
+}
+
+.connect {
+    background-color: white;
+    color: blue;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    font-size: larger;
+    border-radius: 15px;
+    padding: 10px;
+    margin-top: 0.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metaLogo {
+    height: 1vw;
+    width: 1vw;
+    margin-right: 0.5vw;
+}
+
 .button {
     background-color: blue;
     color: white;
@@ -83,6 +137,7 @@ export default {
     font-size: larger;
     border: 1vw blue solid;
     border-radius: 15px;
+    margin-top: 2vw;
 }
 
 .mainContent {
@@ -103,11 +158,11 @@ export default {
 
 .profil {
     object-fit: cover;
-    height: 15%;
-    width: 140px;
     align-self: flex-end;
     padding: 20px;
     border-radius: 50%;
+    height: 8vw;
+    width: 8VW;
 }
 
 .light {
