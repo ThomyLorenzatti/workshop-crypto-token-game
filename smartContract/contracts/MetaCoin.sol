@@ -26,7 +26,7 @@ contract GameToken is ERC20 {
         require(payed <= dexBalance, "Not enough tokens in the reserve");
 
         // send token to smartcontract adress
-        _transfer(msg.sender, address(this), 10*10**18);
+        _transfer(msg.sender, address(this), 10);
 
         // generate a random number
         uint random = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100;
