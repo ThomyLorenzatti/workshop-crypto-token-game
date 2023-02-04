@@ -17,10 +17,13 @@ contract GameToken is ERC20 {
         return balanceOf(msg.sender);
     }
 
-    function play() public {
+    function play() payable public {
 
-        if (10 > balanceOf(msg.sender))
-            revert InsufficientBalance({requested: 10*10**18, available: balanceOf(msg.sender)});
+        uint256 payed = msg.value;
+        uint256 dexBalance = token.balanceOf(address(this));
+
+        require(payed == 0, "You need to pay 10 tokens to play");
+        require(amountTobuy <= dexBalance, "Not enough tokens in the reserve");
 
         // send token to smartcontract adress
         _transfer(msg.sender, address(this), 10*10**18);
