@@ -1,5 +1,8 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const private_key = '422b8ea0de3313cc2a4df81e24a0aac79ce3d3dc4ae190fc7c4cb69b513ed062';
+const private_key = process.env.PRIVATE_KEY;
 
 module.exports = {
   networks: {
@@ -9,7 +12,7 @@ module.exports = {
      network_id: "*",       // Any network (default: none)
     },
     matic: {
-      provider: () => new HDWalletProvider(private_key, `https://matic-mumbai.chainstacklabs.com/`),
+      provider: () => new HDWalletProvider(private_key, process.env.RPC_URL),
       network_id: 80001,
       confirmations: 2,
       timeoutBlocks: 200,

@@ -23,19 +23,21 @@
                 <div v-if="!$metamask.states.installed">
                     <h3>Metamask is not connected</h3>
                     <p>Install Metamask to use this app</p>
-                </div>
-            <div v-if="$metamask.states.installed">
-                <h3>Metamask is already connected</h3>
-                <p>Network Chain ID: {{ $metamask.states.chainId }}</p>
-                <p v-if="$metamask.states.connected">
-                    Wallet: {{ $metamask.states.address }}
-                </p>
-                <button class="connect" :disabled="$metamask.states.connected" @click="$metamask.connect()">
+                    <button class="connect" :disabled="$metamask.states.connected" @click="$metamask.connect()">
                     <img
                         src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="Metamask"
                         class="metaLogo">
-                    Connect your Wallet
-                </button>
+                        Connect your Wallet
+                    </button>
+                </div>
+                <div class="textFont" v-if="$metamask.states.installed">
+                    <h3>Metamask is already connected</h3>
+                    <p class="p-tag">Network Chain ID: {{ $metamask.states.chainId }}</p>
+                    <p class="p-tag">Mes GameTokens: {{ userBalance }}</p>
+                    <p class="p-tag">CasinoTokens: {{ contractBalance }}</p>
+                    <p class="p-tag" v-if="$metamask.states.connected">
+                        Wallet: {{ $metamask.states.address }}
+                    </p>
                 </div>
             </div>
             <img class="profil" src="https://resize-public.ladmedia.fr/img/var/public/storage/images/news/la-grosse-boulette-de-vincent-lagaf-sur-son-retour-sur-tf1-l-annonce-qu-il-a-du-immediatement-rectifier-1682838/44572832-1-fre-FR/La-grosse-boulette-de-Vincent-Lagaf-sur-son-retour-sur-TF1-l-annonce-qu-il-a-du-immediatement-rectifier-!.jpg"/>
@@ -46,11 +48,18 @@
 
 <script setup>
 import { ref } from 'vue'
+import data from '../../smartContract/build/contracts/GameToken.json'
+import Web3 from 'web3';
+
 let res = ref('');
+let contractBalance = ref(0);
+let userBalance = ref(0);
 // fetch hello api
 res = await $fetch('/api/hello');
 
+const config = useRuntimeConfig()
 const $metamask = useMetamask();
+const $contracts = useContracts();
 const wheel = ref(null);
 const items = [
   { id: 1, name: "Nothing", htmlContent: "Nothing", textColor: "red", background: "black" },
@@ -59,10 +68,26 @@ const items = [
   { id: 4, name: "Mountain of Token", htmlContent: "Mountain of Token", textColor: "white", background: "gold" },
 ];
 
-function launchWheel (){
-    console.log(wheel);
-    const audio = new Audio('https://www.gd-productions.info/divers/dossier-tv/justeprix2009_pierrebillon.mp3')
-    audio.play()
+async function launchWheel (){
+    // const audio = new Audio('https://www.gd-productions.info/divers/dossier-tv/justeprix2009_pierrebillon.mp3')
+    // audio.play()
+    // console.log($contracts)
+    // console.log($metamask.states.address)
+    // const play = await $contracts.get("gmt").methods.play().send({from: $metamask.states.address});
+    // console.log("play", play);
+
+    let web3 = new Web3(window.ethereum);
+    let contract = new web3.eth.Contract(data.abi, config.smart_contract_address);
+    // let tranfert = await contract.methods.transfer(config.smart_contract_address, (10*10**18).toString()).send({ from: $metamask.states.address });
+
+    // var myContract = new web3.eth.Contract(data.abi, config.smart_contract_address);
+
+    const result = contract.methods.play(10).send({ from: $metamask.states.address, value: 10*10**18 });
+    console.log(result)
+
+    // var play = await myContract.methods.play().send({ from: $metamask.states.address, value: 10*10**18 });
+    // console.log(play.events.win);
+
     wheel.value.launchWheel();
 }
 
@@ -71,8 +96,25 @@ function wheelStartedCallback() {
 }
 
 function wheelEndedCallback(resultItem) {
-    console.log("wheel ended !", resultItem);
+    console.log("wheel ended !");
 }
+
+$contracts.define(
+    "gmt", 
+    data.abi, 
+    config.smart_contract_address, 
+    config.rpc_url
+)
+
+async function getBalances() {
+    const balance = await $contracts.get("gmt").methods.balanceOf($metamask.states.address).call();
+    userBalance.value = balance / 10**18;
+
+    const cbalance = await $contracts.get("gmt").methods.balanceOf(config.smart_contract_address).call();
+    contractBalance.value = cbalance / 10**18;
+}
+
+getBalances();
 </script>
 
 <script>
@@ -179,6 +221,16 @@ export default {
     font-family: Arial, Helvetica, sans-serif;
     color: blue;
     font-weight: 900;
+}
+
+.p-tag {
+    padding: 3px;
+}
+
+.textFont {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-weight: 600;
 }
 
 .title {
