@@ -17,16 +17,13 @@ contract GameToken is ERC20 {
         return balanceOf(msg.sender);
     }
 
-    function play() payable public {
+    function play(uint256 price) public {
 
-        uint256 payed = msg.value;
-        uint256 dexBalance = balanceOf(address(this));
-
-        require(payed == 0, "You need to pay 10 tokens to play");
-        require(payed <= dexBalance, "Not enough tokens in the reserve");
+        if (price != 10*10**18)
+            revert InsufficientBalance({requested: 10*10**18, available: price});
 
         // send token to smartcontract adress
-        _transfer(msg.sender, address(this), 10);
+        _transfer(msg.sender, address(this), 10*10**18);
 
         // generate a random number
         uint random = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100;
