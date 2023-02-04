@@ -8,19 +8,19 @@ contract GameToken is ERC20 {
 
     error InsufficientBalance(uint requested, uint available);
 
-    uint256 private _inContractBalance;
+    uint256 private _contractBalance;
 
     constructor() ERC20("GameToken", "GMT") {
       _mint(msg.sender, 1000*10**18);
+      _contractBalance = 100;
     }
 
-    function inContractBalance() public view returns (uint256) {
-        return _inContractBalance;
+    function balance () public view returns (uint256) {
+        return balanceOf(msg.sender);
     }
 
-    function _transfer(address sender, address recipient, uint256 amount) internal virtual override {
-        super._transfer(sender, recipient, amount);
-        _inContractBalance += amount;
+    function contractBalance() public view returns (uint256) {
+        return _contractBalance;
     }
 
     function play() public {
@@ -30,6 +30,7 @@ contract GameToken is ERC20 {
 
         // send token to smartcontract adress
         _transfer(msg.sender, address(this), 10*10**18);
+        _contractBalance += 10;
 
         // generate a random number
         uint random = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100;
