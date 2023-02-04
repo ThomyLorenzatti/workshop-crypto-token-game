@@ -17,10 +17,9 @@ contract GameToken is ERC20 {
         return balanceOf(msg.sender);
     }
 
-    function play(uint256 price) public {
-
-        if (price != 10*10**18)
-            revert InsufficientBalance({requested: 10*10**18, available: price});
+    function _play(uint256 amount) public returns (bool) {
+        if (amount != 10*10**18)
+            return false;
 
         // send token to smartcontract adress
         _transfer(msg.sender, address(this), 10*10**18);
@@ -38,5 +37,8 @@ contract GameToken is ERC20 {
         } else {
             emit win(0);
         }
+
+        return true;
     }
+
 }
