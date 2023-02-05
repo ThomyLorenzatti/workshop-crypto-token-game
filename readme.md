@@ -112,3 +112,9 @@ truffle migrate --network matic
 </p>
 
 - [ ] You should get the contract adress into the terminal after the deployment.
+
+## Lets interact with our smar contract on the webApp
+
+# Add smart contract adress into the webApp
+
+- [ ] Add the smart contract adress into the smart_contract_address variable in the webApp/nuxt.config.ts file.

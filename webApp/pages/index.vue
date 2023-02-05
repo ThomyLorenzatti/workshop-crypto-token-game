@@ -11,7 +11,6 @@
                 :size="500"
                 :result="1"
                 :duration="10"
-                :indicator-position="top"
                 :display-indicator="true"
                 :centered-indicator="true"
                 :base-display-indicator="true"
@@ -83,9 +82,11 @@ async function launchWheel () {
 
     // check if event win is emitted
     if (events.win !== undefined) {
-        alert('You win !');
+        console.log("player win 50 GMT !");
     }
-    
+    if (events.draw !== undefined) {
+        console.log("player win 10 GMT back !");
+    }
     wheel.value.launchWheel();
 }
 
@@ -122,7 +123,6 @@ onMounted (() => {
 
 <script>
 import { Roulette } from 'vue3-roulette'
-import consolaGlobalInstance from 'consola';
 
 export default {
   components: {
