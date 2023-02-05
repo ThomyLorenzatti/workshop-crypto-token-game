@@ -99,17 +99,16 @@ uint random = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 1
 ```bash
 truffle compile
 ```
-[ ]
 
 # Deploy the smart contract
 
 ```bash
 truffle migrate --network matic
 ```
-[ ]
 
 <p align="center">
   <img style="width: 500px"
   src="https://media.discordapp.net/attachments/801738010139689010/1071792101144137769/Screenshot_2023-02-05_at_14.58.36.png">
 </p>
+
 - [ ] You should get the contract adress into the terminal after the deployment.
