@@ -41,5 +41,5 @@ touch .env
 ```
 
 [ ] - Add private key into your .env as follow : PRIVATE_KEY=<br>
-[You can find your private key on metamask extension](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-export-an-account-s-private-key)<br>
+[You can find your private key on metamask extension](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-export-an-account-s-private-key)<br><br>
 [ ] - Add RPC matic network into your .env as follow : RPC_URL=https://matic-mumbai.chainstacklabs.com/
