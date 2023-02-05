@@ -45,15 +45,17 @@
 
 <script setup>
 import { ref } from 'vue'
-import SmartContractInfos from '../../smartContract/build/contracts/GameToken.json'
+import SmartContract from '../../smartContract/build/contracts/GameToken.json'
 import web3 from 'web3';
+
+const abi = SmartContract.abi;
 
 let contractBalance = ref(0);
 let userBalance = ref(0);
 
 let metamask = undefined;
 let contract = undefined;
-let eth_adress = undefined;
+let myAdress = undefined;
 
 const config = useRuntimeConfig()
 const wheel = ref(null);
@@ -68,12 +70,13 @@ async function launchWheel () {
 
     let transaction = undefined;
     try {
-        transaction = await contract.methods.transfer(config.smart_contract_address, (10*10**18).toString()).send({from: eth_adress});
+        transaction = await contract.methods.transfer(config.smart_contract_address, (10*10**18).toString()).send({from: myAdress});
     } catch (error) {
         alert('error during buying wheel spin');
         console.log(error);
         return;
     }
+
     updateBalances();
     const events = transaction.events;
 
@@ -100,23 +103,27 @@ function wheelEndedCallback(resultItem) {
 
 async function updateBalances() {
     metamask = new web3(window.ethereum);
-    contract = new metamask.eth.Contract(SmartContractInfos.abi, config.smart_contract_address);
+    contract = new metamask.eth.Contract(abi, config.smart_contract_address);
 
-    eth_adress = await metamask.eth.getAccounts();
-    eth_adress = eth_adress[0];
+    myAdress = await metamask.eth.getAccounts();
+    myAdress = myAdress[0];
 
-    userBalance.value = await contract.methods.balanceOf(eth_adress).call() / 10**18;
+    userBalance.value = await contract.methods.balanceOf(myAdress).call() / 10**18;
     contractBalance.value = await contract.methods.balanceOf(config.smart_contract_address).call() / 10**18;
 }
 
 onMounted (() => {
-    // check if installed
+
+    // check if metamask is installed
     if (typeof window.ethereum !== 'undefined') {
         console.log('MetaMask is installed!');
+
         updateBalances();
+
     } else {
         alert('MetaMask is not installed!');
-    }
+    };
+
 })
 
 </script>

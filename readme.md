@@ -118,3 +118,21 @@ truffle migrate --network matic
 # Add smart contract adress into the webApp
 
 - [ ] Add the smart contract adress into the smart_contract_address variable in the webApp/nuxt.config.ts file.
+
+# Run the webApp
+
+```bash
+cd webApp
+npm run dev
+```
+
+- [ ] Go to http://localhost:3000/ and connect your metamask wallet to the app.
+
+# Play the game
+
+- [ ] Click on the button "lancer la roue" to play the game.
+
+# Congratulation you just created your first ERC20 Token and deployed it on Polygon (Matic) Mumbai Testnet
+
+check all transactions of your smart contract on [polygonscan](https://polygonscan.com/).
+paste your smart contract adress into the search bar.
