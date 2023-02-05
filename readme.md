@@ -22,7 +22,6 @@
 ```bash
 npm install -g truffle
 ```
-- [ ]
 
 # webApp 
 
