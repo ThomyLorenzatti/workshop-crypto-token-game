@@ -35,10 +35,11 @@ npm install
 
 [ ] - 
 ```bash
+cd smartContract
 npm install
 touch .env
 ```
 
-[ ] - Add private key into your .env as follow : PRIVATE_KEY=
-(You can find your private key on metamask extension)[https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-export-an-account-s-private-key#:~:text=Click%20on%20the%20account%20button,on%20'Show%20private%20key'.]
+[ ] - Add private key into your .env as follow : PRIVATE_KEY=<br>
+(You can find your private key on metamask extension)[https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-export-an-account-s-private-key#:~:text=Click%20on%20the%20account%20button,on%20'Show%20private%20key'.]<br>
 [ ] - Add RPC matic network into your .env as follow : RPC_URL=https://matic-mumbai.chainstacklabs.com/
