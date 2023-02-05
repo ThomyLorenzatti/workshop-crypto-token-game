@@ -64,7 +64,7 @@ GameToken is already inheriting the ERC20 contract from openzeppelin library.
 
 The constructor is the function that is called when the contract is deployed. It is used to initialize the contract state.
 
-- [ ] Create constructor function and pass the name, symbol.
+- [ ] Create constructor function and pass the name, symbol as constructor parameters.
 - [ ] The owner of the contract (adress used to deploy the contract) will be the owner of 1000 GMT tokens.
 - [ ] The adress of the contract will be the owner of 100 GMT tokens.
 [Mint function](https://docs.openzeppelin.com/contracts/2.x/api/token/erc20#ERC20-_mint-address-uint256-)
