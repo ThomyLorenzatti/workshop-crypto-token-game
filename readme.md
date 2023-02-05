@@ -61,7 +61,9 @@ GameToken is already inheriting the ERC20 contract from openzeppelin library.
 
 ## Lets code the smart contract
 
-# Constructor function (https://docs.openzeppelin.com/contracts/2.x/erc20-supply)
+# Constructor function
+
+(https://docs.openzeppelin.com/contracts/2.x/erc20-supply)
 
 The constructor is the function that is called when the contract is deployed. It is used to initialize the contract state.
 
