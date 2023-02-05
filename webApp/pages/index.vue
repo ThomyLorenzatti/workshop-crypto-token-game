@@ -7,6 +7,7 @@
                 <Roulette
                 class="wheel"
                 ref="wheel"
+                :key="update"
                 :items="items"
                 :size="500"
                 :result="1"
@@ -14,6 +15,7 @@
                 :display-indicator="true"
                 :centered-indicator="true"
                 :base-display-indicator="true"
+                :wheel-result-index="{ value: result }"
                 @wheel-start="wheelStartedCallback"
                 @wheel-end="wheelEndedCallback"/>
             </div>
@@ -61,10 +63,18 @@ const config = useRuntimeConfig()
 const wheel = ref(null);
 const items = [
   { id: 1, name: "Nothing", htmlContent: "Nothing", textColor: "red", background: "black" },
-  { id: 2, name: "NFT", htmlContent: "NFT", textColor: "white", background: "blue" },
-  { id: 3, name: "Tokens", htmlContent: "Tokens", textColor: "white", background: "green" },
-  { id: 4, name: "Mountain of Token", htmlContent: "Mountain of Token", textColor: "white", background: "gold" },
+  { id: 2, name: "10 GMT", htmlContent: "10 GMT", textColor: "white", background: "blue" },
+  { id: 3, name: "Nothing", htmlContent: "Nothing", textColor: "red", background: "black" },
+  { id: 4, name: "50 GMT", htmlContent: "50 GMT", textColor: "white", background: "green" },
 ];
+
+let result = 2;
+
+const update = ref(0);
+
+const forceRerender = () => {
+  update.value += 1;
+};
 
 async function launchWheel () {
 
@@ -83,13 +93,19 @@ async function launchWheel () {
     const audio = new Audio('https://www.gd-productions.info/divers/dossier-tv/justeprix2009_pierrebillon.mp3')
     audio.play()
 
+    result = 2;
     // check if event win is emitted
     if (events.win !== undefined) {
         console.log("player win 50 GMT !");
+        result = 3;
     }
     if (events.draw !== undefined) {
         console.log("player win 10 GMT back !");
+        result = 1;
     }
+    forceRerender();
+    await new Promise(resolve => setTimeout(resolve, 100));
+    console.log(result);
     wheel.value.launchWheel();
 }
 

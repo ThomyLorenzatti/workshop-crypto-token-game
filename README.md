@@ -103,7 +103,7 @@ truffle compile
 # Deploy the smart contract
 
 ```bash
-truffle migrate --network matic
+truffle migrate --network mumbai
 ```
 
 <p align="center">
