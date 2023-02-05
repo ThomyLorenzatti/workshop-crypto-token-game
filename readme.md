@@ -72,7 +72,7 @@ The constructor is the function that is called when the contract is deployed. It
 # Override the transfer function
 
 The goal of the workshop is to create a token where users on a web app can use 10 GMT to play a game.
-The game will be a simple wheel where user pay 10 GMT to spin the wheel and has caracterisstics:
+The game will be a simple wheel where user pay 10 GMT to spin the wheel and has following caracteristics:
 - 10% chance to win 50 GMT
 - 20% chance to draw 10 GMT
 - 70% chance to loose 10 GMT already paid
