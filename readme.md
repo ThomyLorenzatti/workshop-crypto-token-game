@@ -134,5 +134,10 @@ npm run dev
 
 # Congratulation you just created your first ERC20 Token and deployed it on Polygon (Matic) Mumbai Testnet
 
-check all transactions of your smart contract on [polygonscan](https://polygonscan.com/).
-paste your smart contract adress into the search bar.
+Check all transactions of your smart contract on [mumbai polygonscan](https://mumbai.polygonscan.com/).<br>
+Paste your smart contract adress into the search bar.
+
+<p align="center">
+  <img style="width: 500px"
+  src="https://media.discordapp.net/attachments/801738010139689010/1071797729946247249/image.png?width=2160&height=1292">
+</p>
