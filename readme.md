@@ -30,7 +30,7 @@ npm install -g truffle
 cd webApp
 npm install
 ```
-- [ ].
+- [ ] .
 
 # smartContract
 
@@ -39,7 +39,7 @@ cd smartContract
 npm install
 touch .env
 ```
-- [ ].
+- [ ] .
 
 # 
 
